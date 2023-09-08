@@ -43,7 +43,10 @@ testo del post,
 immagine (non tutti i post devono avere una immagine),
 numero di likes.
 Non è necessario creare date casuali
-Per le immagini va bene utilizzare qualsiasi servizio di placeholder ad es. Unsplash (https://unsplash.it/300/300?image=<id>) */
+Per le immagini va bene utilizzare qualsiasi servizio di placeholder ad es. Unsplash (https://unsplash.it/300/300?image=<id>) 
+Milestone 2
+Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
+*/
 
 const posts = [
     {
@@ -104,10 +107,17 @@ const posts = [
 ];
 
 const containerEl = document.querySelector('#container');
+let postLiked = [];
 
-posts.forEach((postObj) => {
 
+posts.forEach((postObj, i) => {
+    
+    //genero i post
     containerEl.insertAdjacentHTML('beforeend', postMarkup(postObj));
+    
+    //recupero ogni post dalla dom e gli aggiungo il toggle al like 
+    const likeButtonEl = document.querySelectorAll('.js-likes')[i];
+    like(likeButtonEl, i);
 });
 
 
@@ -138,13 +148,13 @@ function postMarkup (object) {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="${object.id}">
+                    <a class="like-button"  js-like-button" href="##" data-postid="${object.id}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${object.likes}</b> persone
+                    Piace a <b id="like-counter-${object.id}" class="js-likes-counter">${object.likes}</b> persone
                 </div>
             </div> 
         </div>            
@@ -152,3 +162,44 @@ function postMarkup (object) {
 
     return postMarkup;
 };
+
+
+/**
+ * 
+ * @param {DOMelement} button 
+ */
+function like (DOMsection, index) {
+
+    const button = DOMsection.querySelector('a');
+    const countLikes = DOMsection.querySelector('.likes__counter b');
+
+    button.addEventListener('click', function (){
+    
+        button.classList.toggle('like-button--liked');
+
+        //intercetto l'arraycorrispondente
+        
+        const likeNum = posts[index].likes;
+        const idLikePost = posts[index].id;
+        countLikes.innerHTML = Number(countLikes.textContent);
+
+        if (countLikes.textContent == likeNum) {
+
+            countLikes.innerHTML = Number(countLikes.textContent) + 1;
+            
+            postLiked.push(idLikePost);
+            console.log(postLiked);
+
+
+        } else {
+            countLikes.innerHTML = Number(countLikes.textContent) - 1;
+            const removeLike = postLiked.filter((like) => like !== idLikePost);
+            console.log(removeLike);
+            postLiked = removeLike;
+
+        };
+
+
+    });
+};
+
