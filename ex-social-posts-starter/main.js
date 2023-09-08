@@ -88,7 +88,7 @@ const posts = [
         media: "https://unsplash.it/600/400?image=24",
         author: {
             name: "Luca Formicola",
-            image: null
+            image: null, 
         },
         likes: 56,
         created: "2021-04-03"
@@ -103,7 +103,18 @@ const posts = [
         },
         likes: 95,
         created: "2021-03-05"
-    }
+    },
+    {
+        id: 6,
+        content: "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
+        media: "https://unsplash.it/600/400?image=24",
+        author: {
+            name: "Elia Buratti",
+            image: null, 
+        },
+        likes: 56,
+        created: "2021-04-03"
+    },
 ];
 
 const containerEl = document.querySelector('#container');
@@ -134,7 +145,7 @@ function postMarkup (object) {
         <div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${object.media}" alt="${object.author.name}">                    
+                    ${checkPictures(object.author.image, object.author.name)}
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${object.author.name}</div>
@@ -224,5 +235,25 @@ function reverseDate (object) {
     const dateReverseArray = object.split("-").reverse().join('-');
 
     return dateReverseArray;
+};
+
+function checkPictures (objectPicture, objectName) {
+
+    console.log(objectPicture);
+    let markup;
+
+    if (objectPicture === null) {
+        
+        const nameSplitted = objectName.split(' ');
+
+        const firstLetter = nameSplitted[0].charAt(0) + nameSplitted[1].charAt(0);
+
+        markup = `<p>${firstLetter}</p>`;        
+    } else {
+        markup = `<img class="profile-pic" src="${objectPicture}" alt="${objectName}">`;
+    }
+
+    return markup;
+
 }
 
