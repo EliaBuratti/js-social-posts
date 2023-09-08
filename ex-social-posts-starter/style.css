@@ -34,6 +34,7 @@ h1 {
 .post { 
     padding: 16px;
     background-color: white;
+    border-radius: 1rem;
 }
 
 .post__header {

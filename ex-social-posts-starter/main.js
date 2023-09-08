@@ -117,6 +117,7 @@ posts.forEach((postObj, i) => {
     
     //recupero ogni post dalla dom e gli aggiungo il toggle al like 
     const likeButtonEl = document.querySelectorAll('.js-likes')[i];
+
     like(likeButtonEl, i);
 });
 
@@ -137,7 +138,7 @@ function postMarkup (object) {
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${object.author.name}</div>
-                    <div class="post-meta__time">${object.created}</div>
+                    <div class="post-meta__time">${reverseDate(object.created)}</div>
                 </div>                    
             </div>
         </div>
@@ -211,4 +212,17 @@ function like (DOMsection, index) {
         console.log(postLiked); //verifico se si aggiorna correttamente l'array
     });
 };
+
+/**
+ * 
+ * @param {string} string expected: 'yyyy-mm-gg' American type
+ * @returns 'gg-mm-yyyy' Italy type
+ */
+function reverseDate (object) {
+    
+    //potevo direttamente fare return con la funzione, la costante non è obbligatoria
+    const dateReverseArray = object.split("-").reverse().join('-');
+
+    return dateReverseArray;
+}
 
