@@ -113,7 +113,7 @@ const posts = [
             image: null, 
         },
         likes: 56,
-        created: "2021-04-03"
+        created: "2023-09-08"
     },
 ];
 
@@ -237,11 +237,17 @@ function reverseDate (object) {
     return dateReverseArray;
 };
 
+/**
+ * 
+ * @param {String} objectPicture path of image or 'null' 
+ * @param {String} objectName expected 'Name Lastname'
+ * @returns markup
+ */
 function checkPictures (objectPicture, objectName) {
 
-    console.log(objectPicture);
     let markup;
 
+    //genero il markup a seconda se è presente l'immagine oppure no
     if (objectPicture === null) {
         
         const nameSplitted = objectName.split(' ');
@@ -255,5 +261,5 @@ function checkPictures (objectPicture, objectName) {
 
     return markup;
 
-}
+};
 
