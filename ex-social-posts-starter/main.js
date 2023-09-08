@@ -166,40 +166,49 @@ function postMarkup (object) {
 
 /**
  * 
- * @param {DOMelement} button 
+ * @param {DOMelement} DOMsection dev'essere contenuto il pulsante e il contatore
+ * @param {index} number numero dei post da applicare la funzione
  */
 function like (DOMsection, index) {
 
+    //dalla dom ottengo i campi del like e del contatore
     const button = DOMsection.querySelector('a');
     const countLikes = DOMsection.querySelector('.likes__counter b');
 
+    //creo un event listener sul pulsante like
     button.addEventListener('click', function (){
     
+        //metto o tolgo la classe che illumina il pulsante
         button.classList.toggle('like-button--liked');
-
-        //intercetto l'arraycorrispondente
         
+        //creo una costante dove posso verificare i like 
         const likeNum = posts[index].likes;
-        const idLikePost = posts[index].id;
-        countLikes.innerHTML = Number(countLikes.textContent);
 
+        //creo una costante dove reperisco l'id del post
+        const idLikePost = posts[index].id;
+
+        //se il contatore dei like è uguale al numero dei like dell'array
         if (countLikes.textContent == likeNum) {
 
+            //incremento di uno il numero di like
             countLikes.innerHTML = Number(countLikes.textContent) + 1;
             
+            //salvo in un array i post con il like
             postLiked.push(idLikePost);
-            console.log(postLiked);
 
 
         } else {
+
+            //decremento di uno il numero di like
             countLikes.innerHTML = Number(countLikes.textContent) - 1;
+
+            //rimuovo il like dall' array
             const removeLike = postLiked.filter((like) => like !== idLikePost);
-            console.log(removeLike);
+
+            //aggiorno l'array 
             postLiked = removeLike;
-
         };
-
-
+        console.log(postLiked); //verifico se si aggiorna correttamente l'array
     });
 };
 
